@@ -226,12 +226,6 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, event *Event) {
 	}
 }
 
-func (vor *Voronoi) markEventInArc(event *Event) {
-	for _, event := range vor.Circles {
-
-	}
-}
-
 func (vor *Voronoi) circle(a Point, b Point, c Point) (bool, float64, Point) {
 	// Check if BC makes 'right turn' from AB
 	if ((b.X-a.X)*(c.Y-a.Y) - (c.X-a.X)*(b.Y-a.Y)) > 0 {
