@@ -14,9 +14,12 @@ func (api *Api) handleVoronoi(w http.ResponseWriter, r *http.Request) error {
 	var points []PointsDto
 	data := r.PostFormValue("data")
 	err := json.Unmarshal([]byte(data), &points)
+	if err != nil {
+		return err
+	}
 	vor := voronoi.NewVoronoi(mapPoints(points))
 	vor.Process()
-	println("ads")
+	err = json.NewEncoder(w).Encode(vor.Result)
 	return err
 }
 
