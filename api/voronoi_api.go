@@ -24,8 +24,8 @@ func mapPoints(points []PointsDto) []voronoi.Point {
 	voronoiPoints := []voronoi.Point{}
 	for _, point := range points {
 		voronoiPoints = append(voronoiPoints, voronoi.Point{
-			X: point.X,
-			Y: point.Y,
+			X: float64(point.X),
+			Y: float64(point.Y),
 		})
 	}
 	return voronoiPoints
