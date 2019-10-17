@@ -15,7 +15,7 @@ func NewApi(config ApiConfig) Api {
 	return Api{Config: config}
 }
 
-func (api *Api) Handle(router mux.Router) {
+func (api *Api) Handle(router *mux.Router) {
 	router.Handle("/voronoi", api.handler(api.handleVoronoi)).Methods("POST")
 }
 
