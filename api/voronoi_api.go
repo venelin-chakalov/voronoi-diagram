@@ -2,17 +2,31 @@ package api
 
 import (
 	"encoding/json"
+	"github.com/VenkoChakalov/VoronoiDiagrams/voronoi"
 	"net/http"
 )
 
-type VoronoiPoint struct {
+type PointsDto struct {
 	X, Y float64
 }
 
 func (api *Api) handleVoronoi(w http.ResponseWriter, r *http.Request) error {
-	var points []VoronoiPoint
+	var points []PointsDto
 	data := r.PostFormValue("data")
-	println(data)
-	err := json.NewDecoder(r.Body).Decode(&points)
+	err := json.Unmarshal([]byte(data), &points)
+	vor := voronoi.NewVoronoi(mapPoints(points))
+	vor.Process()
+	println("ads")
 	return err
+}
+
+func mapPoints(points []PointsDto) []voronoi.Point {
+	voronoiPoints := []voronoi.Point{}
+	for _, point := range points {
+		voronoiPoints = append(voronoiPoints, voronoi.Point{
+			X: point.X,
+			Y: point.Y,
+		})
+	}
+	return voronoiPoints
 }
