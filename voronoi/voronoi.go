@@ -104,10 +104,10 @@ func (vor *Voronoi) processCircles() {
 
 		// Recheck circle events on either side of p
 		if arc.Previous != nil {
-			vor.checkCircleEvent(arc.Previous, event.X)
+			vor.checkCircleEvent(arc.Previous, event.X, &event)
 		}
 		if arc.Next != nil {
-			vor.checkCircleEvent(arc.Next, event.X)
+			vor.checkCircleEvent(arc.Next, event.X, &event)
 		}
 
 	}
@@ -177,9 +177,9 @@ func (vor *Voronoi) insertArc(point Point) {
 			currentArc.Next.LeftEdge, currentArc.RightEdge = &segment, &segment
 
 			// check whether the newly added event caused a circle event
-			vor.checkCircleEvent(currentArc, point.X)
-			vor.checkCircleEvent(currentArc.Previous, point.X)
-			vor.checkCircleEvent(currentArc.Next, point.X)
+			vor.checkCircleEvent(currentArc, point.X, currentArc.Event)
+			vor.checkCircleEvent(currentArc.Previous, point.X, currentArc.Event)
+			vor.checkCircleEvent(currentArc.Next, point.X, currentArc.Event)
 			return
 		}
 		currentArc = currentArc.Next
@@ -203,10 +203,10 @@ func (vor *Voronoi) insertArc(point Point) {
 	vor.Result = append(vor.Result, &segment)
 }
 
-func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64) {
+func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, event *Event) {
 	// Check whether we have new circle event for the arc
 	if arc.Event != nil && arc.Event.X != x0 {
-		arc.Event.Valid = false
+		(*event).Valid = false
 	}
 	arc.Event = nil
 	if (arc.Previous == nil) || (arc.Next == nil) {
@@ -223,6 +223,12 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64) {
 		}
 		arc.Event = &event
 		PushEvent(event, &vor.Circles)
+	}
+}
+
+func (vor *Voronoi) markEventInArc(event *Event) {
+	for _, event := range vor.Circles {
+
 	}
 }
 
