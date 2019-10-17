@@ -214,7 +214,7 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64) {
 	}
 
 	hasCircle, x, center := vor.circle(arc.Previous.Point, arc.Point, arc.Next.Point)
-	if hasCircle {
+	if hasCircle && x > vor.Box.X0 {
 		event := Event{
 			X:     x,
 			Point: center,
@@ -286,7 +286,7 @@ func intersect(point Point, arc Arc) (bool, Point) {
 	if ((arc.Previous == nil) || (a <= point.Y)) && ((arc.Next == nil) || (point.Y <= b)) {
 		pY := point.Y
 		// Parabola equation
-		pX := 1.0 * (math.Pow(arc.Point.X, 2) + math.Pow(arc.Point.Y - pY, 2) - math.Pow(point.X, 2)) / (2*arc.Point.X - 2*point.X)
+		pX := 1.0 * (math.Pow(arc.Point.X, 2) + math.Pow(arc.Point.Y-pY, 2) - math.Pow(point.X, 2)) / (2*arc.Point.X - 2*point.X)
 		return true, Point{pX, pY}
 	}
 	return false, Point{}
@@ -337,7 +337,7 @@ func (vor *Voronoi) finishEdges() Arc {
 	line := vor.Box.X1 + (vor.Box.X1 - vor.Box.X0) + (vor.Box.Y1 - vor.Box.Y0)
 	arc := &(*vor).Arc
 	for arc.Next != nil {
-		if arc.RightEdge != nil{
+		if arc.RightEdge != nil {
 			intersectPoint := intersection(arc.Point, arc.Next.Point, line*2.0)
 			(*arc).RightEdge = Finish(intersectPoint, (arc).RightEdge)
 		}
