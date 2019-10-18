@@ -104,10 +104,10 @@ func (vor *Voronoi) processCircles() {
 
 		// Recheck circle events on either side of p
 		if arc.Previous != nil {
-			vor.checkCircleEvent(arc.Previous, event.X, &event)
+			vor.checkCircleEvent(arc.Previous, event.X, event)
 		}
 		if arc.Next != nil {
-			vor.checkCircleEvent(arc.Next, event.X, &event)
+			vor.checkCircleEvent(arc.Next, event.X, event)
 		}
 
 	}
@@ -203,12 +203,12 @@ func (vor *Voronoi) insertArc(point Point) {
 	vor.Result = append(vor.Result, &segment)
 }
 
-func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, event *Event) {
+func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, eventD *Event) {
 	// Check whether we have new circle event for the arc
 	if arc.Event != nil && arc.Event.X != x0 {
-		(*event).Valid = false
+		(*arc).Event.Valid = false
 	}
-	arc.Event = nil
+	//arc.Event = nil
 	if (arc.Previous == nil) || (arc.Next == nil) {
 		return
 	}
@@ -222,7 +222,7 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, event *Event) {
 			Valid: true,
 		}
 		arc.Event = &event
-		PushEvent(event, &vor.Circles)
+		PushEvent(&event, &vor.Circles)
 	}
 }
 

@@ -2,7 +2,6 @@ package voronoi
 
 import "github.com/jupp0r/go-priority-queue"
 
-
 func CreateQ() pq.PriorityQueue {
 	return pq.New()
 }
@@ -11,7 +10,7 @@ func PushPoint(point Point, queue *pq.PriorityQueue) {
 	(*queue).Insert(point, point.X)
 }
 
-func PushEvent(event Event, queue *pq.PriorityQueue) {
+func PushEvent(event *Event, queue *pq.PriorityQueue) {
 	(*queue).Insert(event, event.X)
 }
 
@@ -19,23 +18,24 @@ func PopPoint(queue *pq.PriorityQueue) Point {
 	lastEl, _ := (*queue).Pop()
 	return lastEl.(Point)
 }
-func PopEvent(queue *pq.PriorityQueue) Event {
+func PopEvent(queue *pq.PriorityQueue) *Event {
 	lastEl, _ := (*queue).Pop()
-	return lastEl.(Event)
+	event := lastEl.(Event)
+	return &event
 }
 
-func IsEmpty(queue *pq.PriorityQueue) bool  {
-	return  queue.Len() == 0
+func IsEmpty(queue *pq.PriorityQueue) bool {
+	return queue.Len() == 0
 }
 
 //TODO REMOVE CASTING
-func TopOfPoints (queue *pq.PriorityQueue) Point {
+func TopOfPoints(queue *pq.PriorityQueue) Point {
 	point, _ := (*queue).Pop()
 	(*queue).Insert(point, point.(Point).X)
 	return point.(Point)
 }
 
-func TopOfEvents (queue *pq.PriorityQueue) Event {
+func TopOfEvents(queue *pq.PriorityQueue) Event {
 	event, _ := (*queue).Pop()
 	(*queue).Insert(event, event.(Event).X)
 	return event.(Event)
@@ -53,7 +53,7 @@ type Event struct {
 }
 
 type Arc struct {
-	Point 	  Point
+	Point     Point
 	Previous  *Arc
 	Next      *Arc
 	LeftEdge  *Edge
@@ -94,4 +94,3 @@ func Finish(point Point, edge *Edge) *Edge {
 	(*edge).Done = true
 	return edge
 }
-
