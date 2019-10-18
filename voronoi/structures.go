@@ -10,7 +10,7 @@ func PushPoint(point Point, queue *pq.PriorityQueue) {
 	(*queue).Insert(point, point.X)
 }
 
-func PushEvent(event Event, queue *pq.PriorityQueue) {
+func PushEvent(event *Event, queue *pq.PriorityQueue) {
 	(*queue).Insert(event, event.X)
 }
 
@@ -18,9 +18,9 @@ func PopPoint(queue *pq.PriorityQueue) Point {
 	lastEl, _ := queue.Pop()
 	return lastEl.(Point)
 }
-func PopEvent(queue *pq.PriorityQueue) Event {
+func PopEvent(queue *pq.PriorityQueue) *Event {
 	lastEl, _ := (*queue).Pop()
-	return lastEl.(Event)
+	return lastEl.(*Event)
 }
 
 func IsEmpty(queue *pq.PriorityQueue) bool {
@@ -34,7 +34,7 @@ func TopOfPoints(queue *pq.PriorityQueue) Point {
 	return point.(Point)
 }
 
-func TopOfEvents(queue *pq.PriorityQueue) Event {
+func TopOfEvents(queue *pq.PriorityQueue) *Event {
 	event := PopEvent(queue)
 	PushEvent(event, queue)
 	return event

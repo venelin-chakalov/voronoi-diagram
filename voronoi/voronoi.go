@@ -78,7 +78,7 @@ func (vor *Voronoi) processCircles() {
 	// Get next event from circle pq
 	event := PopEvent(&vor.Circles)
 
-	if event.Arc.Event.Valid {
+	if event.Valid {
 		// Start new edge
 		edge := NewEdge(event.Point)
 		vor.Result = append(vor.Result, &edge)
@@ -104,10 +104,10 @@ func (vor *Voronoi) processCircles() {
 
 		// Recheck circle events on either side of p
 		if arc.Previous != nil {
-			vor.checkCircleEvent(arc.Previous, event.X, &event)
+			vor.checkCircleEvent(arc.Previous, event.X, event)
 		}
 		if arc.Next != nil {
-			vor.checkCircleEvent(arc.Next, event.X, &event)
+			vor.checkCircleEvent(arc.Next, event.X, event)
 		}
 
 	}
@@ -222,7 +222,7 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, eventD *Event) {
 			Valid: true,
 		}
 		arc.Event = &event
-		PushEvent(event, &vor.Circles)
+		PushEvent(&event, &vor.Circles)
 	}
 }
 
