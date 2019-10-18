@@ -55,8 +55,8 @@ type Arc struct {
 	Point     Point
 	Previous  *Arc
 	Next      *Arc
-	LeftEdge  *Edge
-	RightEdge *Edge
+	LeftEdge  Edge
+	RightEdge Edge
 	Event     *Event
 }
 
@@ -65,8 +65,8 @@ func NewArc(point Point, previous, next *Arc) Arc {
 		Point:     point,
 		Previous:  previous,
 		Next:      next,
-		LeftEdge:  nil,
-		RightEdge: nil,
+		LeftEdge:  Edge{},
+		RightEdge: Edge{},
 		Event:     nil,
 	}
 }
@@ -85,11 +85,11 @@ func NewEdge(point Point) Edge {
 	}
 }
 
-func Finish(point Point, edge *Edge) *Edge {
-	if (*edge).Done {
+func Finish(point Point, edge Edge) Edge {
+	if (edge).Done {
 		return edge
 	}
-	(*edge).End = point
-	(*edge).Done = true
+	(edge).End = point
+	(edge).Done = true
 	return edge
 }
