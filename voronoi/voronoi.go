@@ -337,9 +337,9 @@ func (vor *Voronoi) finishEdges() Arc {
 	line := vor.Box.X1 + (vor.Box.X1 - vor.Box.X0) + (vor.Box.Y1 - vor.Box.Y0)
 	arc := &(*vor).Arc
 	for arc.Next != nil {
-		if arc.RightEdge != (Edge{}) {
+		if arc.RightEdge != (nil) {
 			intersectPoint := intersection(arc.Point, arc.Next.Point, line*2.0)
-			(*arc).RightEdge = Finish(intersectPoint, &(arc).RightEdge)
+			(*arc).RightEdge = Finish(intersectPoint, (arc).RightEdge)
 		}
 		arc = arc.Next
 	}
