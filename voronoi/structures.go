@@ -86,9 +86,9 @@ func NewEdge(point Point) Edge {
 }
 
 func Finish(point Point, edge *Edge) *Edge {
-	if (*edge).Done {
-		return edge
-	}
+	//if (*edge).Done {
+	//	return edge
+	//}
 	(*edge).End = point
 	(*edge).Done = true
 	return edge
