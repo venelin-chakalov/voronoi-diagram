@@ -35,10 +35,10 @@ func TopOfPoints(queue *pq.PriorityQueue) Point {
 	return point.(Point)
 }
 
-func TopOfEvents(queue *pq.PriorityQueue) Event {
-	event, _ := (*queue).Pop()
-	(*queue).Insert(event, event.(Event).X)
-	return event.(Event)
+func TopOfEvents(queue *pq.PriorityQueue) *Event {
+	event := PopEvent(queue)
+	PushEvent(event, queue)
+	return event
 }
 
 type Point struct {
