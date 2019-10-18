@@ -87,18 +87,18 @@ func (vor *Voronoi) processCircles() {
 		arc := event.Arc
 		if arc.Previous != nil {
 			arc.Previous.Next = arc.Next
-			arc.Previous.RightEdge = edge
+			arc.Previous.RightEdge = &edge
 		}
 		if arc.Next != nil {
 			arc.Next.Previous = arc.Previous
-			arc.Next.LeftEdge = edge
+			arc.Next.LeftEdge = &edge
 		}
 
 		// Finish the edges before and after a
-		if arc.LeftEdge != (Edge{}) {
+		if arc.LeftEdge != nil {
 			arc.LeftEdge = Finish(event.Point, arc.LeftEdge)
 		}
-		if arc.RightEdge != (Edge{}) {
+		if arc.RightEdge != nil {
 			arc.RightEdge = Finish(event.Point, arc.RightEdge)
 		}
 
@@ -148,8 +148,8 @@ func (vor *Voronoi) insertArc(point Point) {
 					Point:     currentArc.Point,
 					Previous:  currentArc,
 					Next:      currentArc.Next,
-					LeftEdge:  Edge{},
-					RightEdge: Edge{},
+					LeftEdge:  nil,
+					RightEdge: nil,
 				}
 				currentArc.Next.Previous = &arc
 				currentArc.Next = arc.Next.Previous
@@ -169,12 +169,12 @@ func (vor *Voronoi) insertArc(point Point) {
 			// Add new edge connected to the intersection point (we will expand this edge like a ray till we dont find another intersection point
 			segment := NewEdge(intersectionPoint)
 			vor.Result = append(vor.Result, &segment)
-			currentArc.Previous.RightEdge, currentArc.LeftEdge = segment, segment
+			currentArc.Previous.RightEdge, currentArc.LeftEdge = &segment, &segment
 
 			// Add new edge connected to the intersection point (we will expand this edge like a ray till we dont find another intersection point
 			segment = NewEdge(intersectionPoint)
 			vor.Result = append(vor.Result, &segment)
-			currentArc.Next.LeftEdge, currentArc.RightEdge = segment, segment
+			currentArc.Next.LeftEdge, currentArc.RightEdge = &segment, &segment
 
 			// check whether the newly added event caused a circle event
 			vor.checkCircleEvent(currentArc, point.X, currentArc.Event)
@@ -199,7 +199,7 @@ func (vor *Voronoi) insertArc(point Point) {
 	y := (currentArc.Next.Point.Y + currentArc.Point.Y) / 2.0
 	start := Point{x, y}
 	segment := NewEdge(start)
-	currentArc.RightEdge, currentArc.Next.LeftEdge = segment, segment
+	currentArc.RightEdge, currentArc.Next.LeftEdge = &segment, &segment
 	vor.Result = append(vor.Result, &segment)
 }
 
@@ -339,7 +339,7 @@ func (vor *Voronoi) finishEdges() Arc {
 	for arc.Next != nil {
 		if arc.RightEdge != (Edge{}) {
 			intersectPoint := intersection(arc.Point, arc.Next.Point, line*2.0)
-			(*arc).RightEdge = Finish(intersectPoint, (arc).RightEdge)
+			(*arc).RightEdge = Finish(intersectPoint, &(arc).RightEdge)
 		}
 		arc = arc.Next
 	}
