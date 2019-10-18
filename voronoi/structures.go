@@ -19,9 +19,8 @@ func PopPoint(queue *pq.PriorityQueue) Point {
 	return lastEl.(Point)
 }
 func PopEvent(queue *pq.PriorityQueue) *Event {
-	lastEl, _ := (*queue).Pop()
-	event := lastEl.(Event)
-	return &event
+	lastEl := PopEvent(queue)
+	return lastEl
 }
 
 func IsEmpty(queue *pq.PriorityQueue) bool {
