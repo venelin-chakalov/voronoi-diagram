@@ -218,11 +218,11 @@ func (vor *Voronoi) checkCircleEvent(arc *Arc, x0 float64, eventD *Event) {
 		event := Event{
 			X:     x,
 			Point: center,
-			Arc:   *arc,
+			Arc:   arc,
 			Valid: true,
 		}
 		arc.Event = &event
-		PushEvent(&event, &vor.Circles)
+		PushEvent(event, &vor.Circles)
 	}
 }
 
