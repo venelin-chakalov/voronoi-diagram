@@ -78,7 +78,7 @@ func (vor *Voronoi) processCircles() {
 	// Get next event from circle pq
 	event := PopEvent(&vor.Circles)
 
-	if event.Valid {
+	if event.Arc.Event.Valid {
 		// Start new edge
 		edge := NewEdge(event.Point)
 		vor.Result = append(vor.Result, &edge)
