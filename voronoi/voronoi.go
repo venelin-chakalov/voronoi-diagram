@@ -104,10 +104,10 @@ func (vor *Voronoi) processCircles() {
 
 		// Recheck circle events on either side of p
 		if arc.Previous != nil {
-			vor.checkCircleEvent(arc.Previous, event.X, event)
+			vor.checkCircleEvent(arc.Previous, event.X, &event)
 		}
 		if arc.Next != nil {
-			vor.checkCircleEvent(arc.Next, event.X, event)
+			vor.checkCircleEvent(arc.Next, event.X, &event)
 		}
 
 	}
