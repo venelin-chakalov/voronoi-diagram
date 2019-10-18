@@ -148,8 +148,8 @@ func (vor *Voronoi) insertArc(point Point) {
 					Point:     currentArc.Point,
 					Previous:  currentArc,
 					Next:      currentArc.Next,
-					LeftEdge:  nil,
-					RightEdge: nil,
+					LeftEdge:  Edge{},
+					RightEdge: Edge{},
 				}
 				currentArc.Next.Previous = &arc
 				currentArc.Next = arc.Next.Previous
