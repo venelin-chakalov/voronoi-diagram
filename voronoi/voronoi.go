@@ -158,7 +158,7 @@ func (vor *Voronoi) insertArc(point Point) {
 				currentArc.Next = &arc
 			}
 			// Add point between current arc and the next one
-			currentArc.Next.RightEdge = currentArc.RightEdge
+			//currentArc.Next.RightEdge = currentArc.RightEdge
 
 			newArc := NewArc(point, currentArc, currentArc.Next)
 			currentArc.Next.Previous = &newArc
@@ -172,9 +172,9 @@ func (vor *Voronoi) insertArc(point Point) {
 			currentArc.Previous.RightEdge, currentArc.LeftEdge = &segment, &segment
 
 			// Add new edge connected to the intersection point (we will expand this edge like a ray till we dont find another intersection point
-			segment = NewEdge(intersectionPoint)
-			vor.Result = append(vor.Result, &segment)
-			currentArc.Next.LeftEdge, currentArc.RightEdge = &segment, &segment
+			segment1 := NewEdge(intersectionPoint)
+			vor.Result = append(vor.Result, &segment1)
+			currentArc.Next.LeftEdge, currentArc.RightEdge = &segment1, &segment1
 
 			// check whether the newly added event caused a circle event
 			vor.checkCircleEvent(currentArc, point.X, currentArc.Event)
