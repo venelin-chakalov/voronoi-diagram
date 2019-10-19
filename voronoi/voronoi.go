@@ -158,7 +158,8 @@ func (vor *Voronoi) insertArc(point Point) {
 				currentArc.Next = &arc
 			}
 			// Add point between current arc and the next one
-			//currentArc.Next.RightEdge = currentArc.RightEdge
+			edge := NewEdge(currentArc.RightEdge.Start)
+			currentArc.Next.RightEdge = &edge
 
 			newArc := NewArc(point, currentArc, currentArc.Next)
 			currentArc.Next.Previous = &newArc
