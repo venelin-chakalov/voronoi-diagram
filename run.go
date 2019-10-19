@@ -26,11 +26,9 @@ func run(app api.Api) {
 		Handler:     cors(router),
 		ReadTimeout: 2 * time.Minute,
 	}
-
+	fmt.Printf("Server started listening on port %d...", app.Config.Port)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		fmt.Printf("Error: %s '\n", err)
-	} else {
-		fmt.Printf("Server started listening at port %d", app.Config.Port)
+		fmt.Printf("Error: %s \n", err)
 	}
 }
 
