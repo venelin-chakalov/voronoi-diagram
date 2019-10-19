@@ -1,7 +1,7 @@
 # VoronoiDiagrams
 The goal of this project is to build Voronoi Diagrams using Fortunes Algorithm.
 
-https://github.com/VenkoChakalov/VoronoiDiagrams/blob/master/images/demo.png
+![alt text](https://github.com/VenkoChakalov/VoronoiDiagrams/blob/master/images/demo.png)
 
 ## Usage
 Execute the following:
