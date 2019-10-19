@@ -3,7 +3,6 @@ package api
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"math"
 	"net/http"
 	"time"
 )
@@ -29,12 +28,7 @@ func (api *Api) handler(f func(w http.ResponseWriter, r *http.Request) error) ht
 			fmt.Printf("Error at: %s", err)
 		}
 		defer func() {
-			endTime := time.Now()
-			fmt.Printf("Time to process the request: %d mS", nanoToMilliSeconds(endTime.Nanosecond()-beginTime.Nanosecond()))
+			fmt.Printf("Time to process the request: %d mS", time.Since(beginTime))
 		}()
 	})
-}
-
-func nanoToMilliSeconds(seconds int) int {
-	return seconds * int(math.Pow(10, -6.0))
 }
