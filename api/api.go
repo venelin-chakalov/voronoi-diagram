@@ -28,7 +28,7 @@ func (api *Api) handler(f func(w http.ResponseWriter, r *http.Request) error) ht
 			fmt.Printf("Error at: %s", err)
 		}
 		defer func() {
-			fmt.Printf("Time to process the request: %d mS", time.Since(beginTime))
+			fmt.Printf("Time to process the request: %d mS", time.Since(beginTime).Milliseconds())
 		}()
 	})
 }

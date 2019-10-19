@@ -132,7 +132,7 @@ func (vor *Voronoi) insertArc(point Point) {
 
 	// We loop till we find the arc that is behind our Point
 	currentArc := &vor.Arc
-	for *currentArc != (Arc{}) {
+	for currentArc != nil {
 		okay, intersectionPoint := intersect(point, *currentArc)
 		// check whether we have intersectionPoint
 		if okay {
@@ -158,11 +158,6 @@ func (vor *Voronoi) insertArc(point Point) {
 				currentArc.Next = &arc
 			}
 			// Add point between current arc and the next one
-			// Add point between current arc and the next one
-			//edge := Edge{}
-			//if (currentArc.RightEdge != nil) {
-			//	edge = NewEdge(currentArc.RightEdge.Start)
-			//}
 			currentArc.Next.RightEdge = currentArc.RightEdge
 
 			newArc := NewArc(point, currentArc, currentArc.Next)
