@@ -28,13 +28,16 @@ func run(app api.Api) {
 	}
 
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		fmt.Printf("Error: %s", err)
+		fmt.Printf("Error: %s '\n", err)
+	} else {
+		fmt.Printf("Server started listening at port %d", app.Config.Port)
 	}
 }
 
 func main() {
 	port := flag.Int("port", 8222, "the default port that the app is running is 8222")
-	proxyCount := flag.Int("port", 8222, "the default count of proxies is 0, it's not implemented")
+	proxyCount := flag.Int("proxies", 8222, "the default count of proxies is 0, it's not implemented")
+	flag.Parse()
 	app := api.NewApi(api.NewApiConfig(*port, *proxyCount))
 	run(app)
 }
