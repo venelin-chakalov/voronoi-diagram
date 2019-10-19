@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gorilla/mux"
+	"math"
 	"net/http"
 	"time"
 )
@@ -24,12 +25,16 @@ func (api *Api) handler(f func(w http.ResponseWriter, r *http.Request) error) ht
 		beginTime := time.Now()
 		r.Body = http.MaxBytesReader(w, r.Body, 100*1024*1024)
 		w.Header().Set("Content-Type", "application/json")
-		if err := f(w, r); err == nil {
+		if err := f(w, r); err != nil {
 			fmt.Printf("Error at: %s", err)
 		}
 		defer func() {
 			endTime := time.Now()
-			fmt.Printf("Time to process the request: %d", endTime.Second()-beginTime.Second())
+			fmt.Printf("Time to process the request: %d mS", nanoToMilliSeconds(endTime.Nanosecond()-beginTime.Nanosecond()))
 		}()
 	})
+}
+
+func nanoToMilliSeconds(seconds int) int {
+	return seconds * int(math.Pow(10, -6.0))
 }
