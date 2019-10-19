@@ -71,7 +71,8 @@ func (vor *Voronoi) Process() {
 	}
 
 	vor.Arc = vor.finishEdges()
-	vor.printOutput()
+	// Print output if you want to :)
+	// vor.printOutput()
 }
 
 func (vor *Voronoi) processCircles() {

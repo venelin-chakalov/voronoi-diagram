@@ -12,7 +12,7 @@ type PointsDto struct {
 
 func (api *Api) handleVoronoi(w http.ResponseWriter, r *http.Request) error {
 	var points []PointsDto
-	data := r.PostFormValue("data")
+	data := r.PostFormValue("points")
 	err := json.Unmarshal([]byte(data), &points)
 	if err != nil {
 		return err
@@ -24,7 +24,7 @@ func (api *Api) handleVoronoi(w http.ResponseWriter, r *http.Request) error {
 }
 
 func mapPoints(points []PointsDto) []voronoi.Point {
-	voronoiPoints := []voronoi.Point{}
+	var voronoiPoints []voronoi.Point
 	for _, point := range points {
 		voronoiPoints = append(voronoiPoints, voronoi.Point{
 			X: 1.0 * (point.X),

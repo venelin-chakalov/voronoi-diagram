@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/VenkoChakalov/VoronoiDiagrams/api"
 	"github.com/gorilla/handlers"
@@ -27,11 +28,13 @@ func run(app api.Api) {
 	}
 
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		println("Error")
+		fmt.Printf("Error: %s", err)
 	}
 }
 
 func main() {
-	app := api.NewApi(api.NewApiConfig(8222, 0))
+	port := flag.Int("port", 8222, "the default port that the app is running is 8222")
+	proxyCount := flag.Int("port", 8222, "the default count of proxies is 0, it's not implemented")
+	app := api.NewApi(api.NewApiConfig(*port, *proxyCount))
 	run(app)
 }

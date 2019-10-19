@@ -1,4 +1,4 @@
-package main
+package test
 
 import "voronoi"
 
@@ -21,20 +21,20 @@ func main() {
 
 	event := voronoi.Event{
 		X:     1,
-		Point: voronoi.Point{1,2},
+		Point: voronoi.Point{1, 2},
 		Arc:   voronoi.Arc{},
 		Valid: false,
 	}
 	event2 := voronoi.Event{
 		X:     2,
-		Point: voronoi.Point{2,2},
+		Point: voronoi.Point{2, 2},
 		Arc:   voronoi.Arc{},
 		Valid: false,
 	}
 
 	event3 := voronoi.Event{
 		X:     3,
-		Point: voronoi.Point{3,2},
+		Point: voronoi.Point{3, 2},
 		Arc:   voronoi.Arc{},
 		Valid: false,
 	}
